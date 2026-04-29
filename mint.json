@@ -26,12 +26,6 @@
     "name": "Ir a la app",
     "url": "https://app.scrivot.cl"
   },
-  "tabs": [
-    {
-      "name": "Referencia de API",
-      "url": "api-reference"
-    }
-  ],
   "anchors": [
     {
       "name": "Comunidad",
@@ -72,61 +66,11 @@
       ]
     },
     {
-      "group": "Autenticación",
-      "pages": [
-        "auth/tokens",
-        "auth/login",
-        "auth/signup",
-        "auth/recuperar-password"
-      ]
-    },
-    {
       "group": "Facturación",
       "pages": [
         "billing/planes",
         "billing/trial",
         "billing/limite-conversaciones"
-      ]
-    },
-    {
-      "group": "Referencia de API",
-      "pages": [
-        "api-reference/introduction",
-        {
-          "group": "Autenticación",
-          "pages": [
-            "api-reference/auth/login",
-            "api-reference/auth/signup",
-            "api-reference/auth/confirm-email",
-            "api-reference/auth/forgot-password",
-            "api-reference/auth/reset-password",
-            "api-reference/auth/generate-widget-token"
-          ]
-        },
-        {
-          "group": "Chatbot",
-          "pages": [
-            "api-reference/chatbot/create",
-            "api-reference/chatbot/list",
-            "api-reference/chatbot/update",
-            "api-reference/chatbot/delete"
-          ]
-        },
-        {
-          "group": "RAG",
-          "pages": [
-            "api-reference/rag/collections",
-            "api-reference/rag/documents",
-            "api-reference/rag/search"
-          ]
-        },
-        {
-          "group": "Facturación",
-          "pages": [
-            "api-reference/billing/usage",
-            "api-reference/billing/subscribe"
-          ]
-        }
       ]
     }
   ],
