@@ -27,7 +27,7 @@
   },
   "tabs": [
     {
-      "name": "API Reference",
+      "name": "Referencia de API",
       "url": "api-reference"
     }
   ],
@@ -80,7 +80,7 @@
       ]
     },
     {
-      "group": "Billing",
+      "group": "Facturación",
       "pages": [
         "billing/planes",
         "billing/trial",
@@ -88,11 +88,11 @@
       ]
     },
     {
-      "group": "API Reference",
+      "group": "Referencia de API",
       "pages": [
         "api-reference/introduction",
         {
-          "group": "Auth",
+          "group": "Autenticación",
           "pages": [
             "api-reference/auth/login",
             "api-reference/auth/signup",
@@ -120,7 +120,7 @@
           ]
         },
         {
-          "group": "Billing",
+          "group": "Facturación",
           "pages": [
             "api-reference/billing/usage",
             "api-reference/billing/subscribe"

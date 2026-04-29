@@ -15,14 +15,14 @@ Ve a [app.scrivot.cl](https://app.scrivot.cl) y regístrate con tu correo. Recib
 
 ## Paso 2 — Crea un chatbot
 
-Desde el dashboard, ve a **Chatbots → Nuevo chatbot** y configura:
+Desde el panel, ve a **Chatbots → Nuevo chatbot** y configura:
 
 - **Nombre** del chatbot (visible internamente)
 - **Idioma principal**
-- **System prompt** — instrucciones base que definen el comportamiento del asistente
+- **Instrucción del sistema** — define la personalidad y el comportamiento del asistente
 
 <Tip>
-  El system prompt es clave. Ejemplo: *"Eres un asistente de soporte de Acme Corp. Solo respondes preguntas relacionadas con nuestros productos."*
+  La instrucción del sistema es clave. Ejemplo: *"Eres un asistente de soporte de Acme Corp. Solo respondes preguntas relacionadas con nuestros productos."*
 </Tip>
 
 ---
@@ -93,7 +93,7 @@ export default function Layout({ children }) {
 
 ## Paso 6 — Autoriza tu dominio
 
-Ve a **Workspace → Configuración → Dominios autorizados** y agrega el dominio donde instalaste el widget (por ejemplo, `miempresa.cl`).
+Ve a **Espacio de trabajo → Configuración → Dominios autorizados** y agrega el dominio donde instalaste el widget (por ejemplo, `miempresa.cl`).
 
 <Warning>
   Sin el dominio autorizado, el widget mostrará un error `403 Forbidden` al intentar cargar la configuración.
