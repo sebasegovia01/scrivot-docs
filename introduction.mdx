@@ -5,11 +5,11 @@ description: Qué es Scrivot y cómo funciona
 
 # Bienvenido a Scrivot
 
-**Scrivot** es una plataforma para crear, configurar y desplegar chatbots inteligentes en tu sitio web o aplicación. Permite definir intenciones, entrenar al asistente con tu propio contenido (RAG) y embeber el widget en cualquier dominio autorizado.
+**Scrivot** es una plataforma para crear, configurar y desplegar chatbots inteligentes en tu sitio web. Permite definir intenciones, entrenar al asistente con tu propio contenido y embeber el widget en cualquier dominio autorizado.
 
 <CardGroup cols={2}>
   <Card title="Inicio rápido" icon="rocket" href="/quickstart">
-    Instala tu primer chatbot en menos de 10 minutos
+    Ten tu chatbot funcionando en menos de 10 minutos
   </Card>
   <Card title="Instalar el widget" icon="code" href="/widget/instalacion">
     Copia el script y agrégalo a tu sitio
@@ -17,8 +17,8 @@ description: Qué es Scrivot y cómo funciona
   <Card title="Configurar intenciones" icon="brain" href="/chatbot/intenciones">
     Define sobre qué temas responde tu chatbot
   </Card>
-  <Card title="API Reference" icon="rectangle-terminal" href="/api-reference/introduction">
-    Explora todos los endpoints disponibles
+  <Card title="Planes y precios" icon="credit-card" href="/planes">
+    Compara los planes disponibles
   </Card>
 </CardGroup>
 
@@ -30,25 +30,25 @@ description: Qué es Scrivot y cómo funciona
 flowchart LR
     A[Tu sitio web] -->|Script con JWT| B[Widget Scrivot]
     B -->|Pregunta del usuario| C[Motor de IA]
-    C -->|Búsqueda semántica| D[Base RAG]
+    C -->|Búsqueda semántica| D[Base de conocimiento]
     D -->|Contexto relevante| C
     C -->|Respuesta| B
     B -->|Muestra respuesta| A
 ```
 
-1. **Embedes el widget** con un tag `<script>` que incluye tu token JWT.
+1. **Embedes el widget** con un `<script>` que incluye tu token JWT.
 2. **El usuario escribe** una pregunta en el chat.
-3. **El motor de IA** busca en tu base de conocimiento (RAG) el contexto más relevante.
+3. **El motor de IA** busca en tu base de conocimiento el contexto más relevante.
 4. **Se genera una respuesta** acotada a las intenciones que definiste.
-5. **La conversación queda registrada** en tu dashboard para monitoreo.
+5. **La conversación queda registrada** en tu panel para monitoreo.
 
 ---
 
-## Arquitectura
+## Componentes de la plataforma
 
 | Componente | Descripción |
 |---|---|
-| **Dashboard** (`app.scrivot.cl`) | Configura chatbots, visualiza métricas y gestiona tu workspace |
-| **Widget** (`firebot`) | Iframe embebido en tu sitio, comunica al usuario con el agente |
-| **Backend API** | NestJS — maneja autenticación, RAG, billing y lógica de negocio |
-| **Base de datos** | Supabase (PostgreSQL) con vectores pgvector para búsqueda semántica |
+| **Panel** (`app.scrivot.cl`) | Configura chatbots, visualiza métricas y gestiona tu espacio de trabajo |
+| **Widget** | Interfaz de chat embebida en tu sitio, conecta al usuario con el asistente |
+| **Base de conocimiento** | Documentos y respuestas que alimentan al chatbot (RAG) |
+| **Base de datos** | Supabase (PostgreSQL) con búsqueda semántica por vectores |
