@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="32" viewBox="0 0 120 32" fill="none">
+  <!-- MessageCircle icon -->
+  <circle cx="14" cy="14" r="11" stroke="#6366f1" stroke-width="2" fill="none"/>
+  <path d="M3 21l3.5-3.5" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="10" cy="14" r="1" fill="#6366f1"/>
+  <circle cx="14" cy="14" r="1" fill="#6366f1"/>
+  <circle cx="18" cy="14" r="1" fill="#6366f1"/>
+  <!-- Text -->
+  <text x="32" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#0f172a">Scrivot</text>
+</svg>
