@@ -1,0 +1,34 @@
+---
+title: Confirmar email
+api: POST /auth/confirm-email
+description: Activar la cuenta con el token recibido por email
+---
+
+<ParamField body="token" type="string" required>
+  Token de confirmación recibido en el correo electrónico
+</ParamField>
+
+<RequestExample>
+```bash cURL
+curl -X POST https://api.scrivot.cl/auth/confirm-email \
+  -H "Content-Type: application/json" \
+  -d '{"token": "<token_del_email>"}'
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "message": "Email confirmado exitosamente"
+}
+```
+
+```json 400
+{
+  "statusCode": 400,
+  "message": "El token de confirmación es obligatorio",
+  "error": "Bad Request",
+  "code": "MISSING_TOKEN"
+}
+```
+</ResponseExample>

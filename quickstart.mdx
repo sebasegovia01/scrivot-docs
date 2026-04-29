@@ -1,0 +1,115 @@
+---
+title: Inicio rápido
+description: Ten tu chatbot funcionando en 10 minutos
+---
+
+## Paso 1 — Crea tu cuenta
+
+Ve a [app.scrivot.cl](https://app.scrivot.cl) y regístrate con tu correo. Recibirás un email de confirmación.
+
+<Note>
+  Si no ves el email en tu bandeja de entrada, revisa la carpeta de spam o usa **Reenviar confirmación** en la pantalla de login.
+</Note>
+
+---
+
+## Paso 2 — Crea un chatbot
+
+Desde el dashboard, ve a **Chatbots → Nuevo chatbot** y configura:
+
+- **Nombre** del chatbot (visible internamente)
+- **Idioma principal**
+- **System prompt** — instrucciones base que definen el comportamiento del asistente
+
+<Tip>
+  El system prompt es clave. Ejemplo: *"Eres un asistente de soporte de Acme Corp. Solo respondes preguntas relacionadas con nuestros productos."*
+</Tip>
+
+---
+
+## Paso 3 — Agrega intenciones (RAG)
+
+Las intenciones son los temas y respuestas que conoce tu chatbot. Ve a **RAG → Colecciones → Nueva colección** y añade documentos con la información que debe manejar el asistente.
+
+Para cargas masivas usa la importación por lotes desde **RAG → Documentos → Importar CSV**.
+
+---
+
+## Paso 4 — Copia el script de instalación
+
+Ve a **Chatbots → [tu chatbot] → Instalar**. Verás algo así:
+
+```html
+<script
+  src="https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN"
+  async
+></script>
+```
+
+Copia ese snippet — el JWT es único para tu chatbot y workspace.
+
+---
+
+## Paso 5 — Agrega el script a tu sitio
+
+Pega el snippet **antes del cierre de `</body>`** en tu HTML:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>...</head>
+  <body>
+    <!-- Tu contenido -->
+
+    <script
+      src="https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN"
+      async
+    ></script>
+  </body>
+</html>
+```
+
+Para **Next.js / React**, usa el componente Script:
+
+```tsx
+import Script from 'next/script'
+
+export default function Layout({ children }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <Script
+          src="https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN"
+          strategy="lazyOnload"
+        />
+      </body>
+    </html>
+  )
+}
+```
+
+---
+
+## Paso 6 — Autoriza tu dominio
+
+Ve a **Workspace → Configuración → Dominios autorizados** y agrega el dominio donde instalaste el widget (por ejemplo, `miempresa.cl`).
+
+<Warning>
+  Sin el dominio autorizado, el widget mostrará un error `403 Forbidden` al intentar cargar la configuración.
+</Warning>
+
+---
+
+## ¡Listo! 🎉
+
+El widget debería aparecer como un botón flotante en la esquina inferior derecha de tu sitio. Haz clic para probarlo.
+
+<CardGroup cols={2}>
+  <Card title="Personalizar apariencia" icon="palette" href="/widget/apariencia">
+    Cambia colores, mensajes y comportamiento
+  </Card>
+  <Card title="Ver métricas" icon="chart-bar" href="/chatbot/overview">
+    Monitorea conversaciones desde el dashboard
+  </Card>
+</CardGroup>

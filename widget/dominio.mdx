@@ -1,0 +1,66 @@
+---
+title: Dominios autorizados
+description: Controla desde qué sitios puede cargarse el widget
+---
+
+## Por qué es necesario autorizar dominios
+
+El widget de Scrivot valida el dominio desde donde se hace la solicitud de carga. Esto evita que el script sea usado en sitios no autorizados y protege tu token JWT de ser copiado a otros dominios.
+
+Si el widget intenta cargarse desde un dominio **no autorizado**, el backend retorna un `403 Forbidden` y el chat no aparece.
+
+---
+
+## Cómo agregar un dominio
+
+1. Ve a **Workspace → Configuración**
+2. En la sección **Dominios autorizados**, escribe tu dominio
+3. Haz clic en **Guardar**
+
+### Formato del dominio
+
+Ingresa solo el dominio base, sin protocolo ni rutas:
+
+| ✅ Correcto | ❌ Incorrecto |
+|---|---|
+| `miempresa.cl` | `https://miempresa.cl` |
+| `app.miempresa.cl` | `miempresa.cl/chatbot` |
+| `localhost` | `http://localhost:3000` |
+
+Para múltiples dominios, sepáralos con punto y coma:
+
+```
+miempresa.cl;staging.miempresa.cl;localhost
+```
+
+---
+
+## Dominios siempre permitidos
+
+Los siguientes dominios están autorizados por defecto en todos los workspaces:
+
+- `scrivot.cl`
+- `localhost` (para desarrollo local)
+- `scrivot-front-staging.up.railway.app`
+
+---
+
+## Subdominios
+
+Cada subdominio debe autorizarse por separado. `miempresa.cl` **no** cubre `app.miempresa.cl` automáticamente.
+
+<Warning>
+  No uses `*` como comodín — no está soportado. Agrega cada dominio/subdominio explícitamente.
+</Warning>
+
+---
+
+## Entornos de desarrollo y producción
+
+Es normal tener múltiples dominios para distintos entornos:
+
+```
+miempresa.cl;staging.miempresa.cl;localhost
+```
+
+Esto permite probar el widget en local (`localhost`) y en staging sin afectar producción.

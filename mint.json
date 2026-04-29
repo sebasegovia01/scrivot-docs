@@ -1,0 +1,135 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Scrivot",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#6366f1",
+    "light": "#818cf8",
+    "dark": "#4f46e5",
+    "anchors": {
+      "from": "#6366f1",
+      "to": "#818cf8"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Soporte",
+      "url": "mailto:contacto@scrivot.cl"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Ir a la app",
+    "url": "https://app.scrivot.cl"
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Comunidad",
+      "icon": "discord",
+      "url": "https://scrivot.cl"
+    },
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/sebasegovia01/scrivot-docs"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Primeros pasos",
+      "pages": [
+        "introduction",
+        "quickstart",
+        "planes"
+      ]
+    },
+    {
+      "group": "Widget",
+      "pages": [
+        "widget/instalacion",
+        "widget/configuracion",
+        "widget/apariencia",
+        "widget/dominio"
+      ]
+    },
+    {
+      "group": "Chatbot",
+      "pages": [
+        "chatbot/overview",
+        "chatbot/intenciones",
+        "chatbot/rag",
+        "chatbot/idiomas"
+      ]
+    },
+    {
+      "group": "Autenticación",
+      "pages": [
+        "auth/tokens",
+        "auth/login",
+        "auth/signup",
+        "auth/recuperar-password"
+      ]
+    },
+    {
+      "group": "Billing",
+      "pages": [
+        "billing/planes",
+        "billing/trial",
+        "billing/limite-conversaciones"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/introduction",
+        {
+          "group": "Auth",
+          "pages": [
+            "api-reference/auth/login",
+            "api-reference/auth/signup",
+            "api-reference/auth/confirm-email",
+            "api-reference/auth/forgot-password",
+            "api-reference/auth/reset-password",
+            "api-reference/auth/generate-widget-token"
+          ]
+        },
+        {
+          "group": "Chatbot",
+          "pages": [
+            "api-reference/chatbot/create",
+            "api-reference/chatbot/list",
+            "api-reference/chatbot/update",
+            "api-reference/chatbot/delete"
+          ]
+        },
+        {
+          "group": "RAG",
+          "pages": [
+            "api-reference/rag/collections",
+            "api-reference/rag/documents",
+            "api-reference/rag/search"
+          ]
+        },
+        {
+          "group": "Billing",
+          "pages": [
+            "api-reference/billing/usage",
+            "api-reference/billing/subscribe"
+          ]
+        }
+      ]
+    }
+  ],
+  "footerSocials": {
+    "website": "https://scrivot.cl"
+  }
+}

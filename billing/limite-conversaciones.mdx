@@ -1,0 +1,64 @@
+---
+title: Límite de conversaciones
+description: Cómo funciona el conteo y qué pasa al alcanzar el límite
+---
+
+## Cómo se cuentan las conversaciones
+
+Cada vez que un usuario inicia una **nueva sesión de chat** con tu widget, se crea un nuevo thread y se incrementa el contador mensual del workspace.
+
+- Un thread = una conversación (puede tener múltiples mensajes)
+- Si el usuario recarga la página pero tiene la misma sesión en localStorage, **no se crea un nuevo thread**
+- El contador resetea el **1 de cada mes** (zona horaria America/Santiago)
+
+---
+
+## Consultar el uso
+
+```http
+GET /billing/workspace/:workspaceId/usage
+```
+
+```json
+{
+  "allowed": true,
+  "used": 18,
+  "limit": 30,
+  "plan": "free"
+}
+```
+
+| Campo | Descripción |
+|---|---|
+| `allowed` | `true` si se pueden crear nuevas conversaciones |
+| `used` | Conversaciones usadas este mes |
+| `limit` | Límite del plan (`null` = ilimitado) |
+| `plan` | Plan actual del workspace |
+
+---
+
+## Qué pasa al alcanzar el límite
+
+Cuando `allowed: false`:
+
+1. El widget **bloquea nuevas conversaciones**
+2. El usuario ve una pantalla informativa: *"Este chatbot ha alcanzado su límite de conversaciones del mes"*
+3. Las conversaciones **ya iniciadas** continúan normalmente
+4. El límite se libera automáticamente el siguiente mes
+
+---
+
+## Planes con conversaciones ilimitadas
+
+En los planes **Pro** y **Enterprise**, el campo `limit` retorna `null` y `allowed` es siempre `true`:
+
+```json
+{
+  "allowed": true,
+  "used": 847,
+  "limit": null,
+  "plan": "pro"
+}
+```
+
+Para eliminar el límite, [actualiza tu plan](/billing/planes).

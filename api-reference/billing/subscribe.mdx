@@ -1,0 +1,57 @@
+---
+title: Suscribirse
+api: POST /billing/workspace/{workspaceId}/subscribe
+description: Activar una suscripción Pro para el workspace
+---
+
+<ParamField path="workspaceId" type="number" required>
+  ID del workspace
+</ParamField>
+
+<ParamField body="interval" type="string" required>
+  Intervalo de facturación: `"month"` o `"year"`
+</ParamField>
+
+<RequestExample>
+```bash cURL
+curl -X POST https://api.scrivot.cl/billing/workspace/7/subscribe \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <service_token>" \
+  -d '{"interval": "month"}'
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "id": 1,
+  "workspace_id": 7,
+  "plan": "pro",
+  "status": "active",
+  "interval": "month",
+  "current_period_ends_at": "2025-05-29T00:00:00.000Z"
+}
+```
+</ResponseExample>
+
+---
+
+## Cancelar suscripción
+
+```http
+POST /billing/workspace/{workspaceId}/cancel
+Authorization: Bearer <token>
+```
+
+El acceso Pro se mantiene hasta el fin del período actual (`current_period_ends_at`).
+
+---
+
+## Iniciar trial gratuito
+
+```http
+POST /billing/workspace/{workspaceId}/start-trial
+Authorization: Bearer <token>
+```
+
+Activa 30 días de plan Pro sin costo. Solo se puede usar una vez por workspace.

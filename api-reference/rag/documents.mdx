@@ -1,0 +1,95 @@
+---
+title: Documentos RAG
+description: Agregar y gestionar el conocimiento del chatbot
+---
+
+## Crear documento
+
+```http
+POST /rag/documents
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+```json
+{
+  "title": "¿Cuál es el horario de atención?",
+  "content": "Atendemos de lunes a viernes de 9:00 a 18:00 hrs. Los sábados de 10:00 a 14:00 hrs.",
+  "category": "FAQ",
+  "tags": ["horario", "atención"],
+  "collection_id": 1
+}
+```
+
+---
+
+## Importación masiva (batch)
+
+Para cargar múltiples intenciones a la vez:
+
+```http
+POST /rag/documents/batch-intentions
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+```json
+[
+  {
+    "title": "Horario de atención",
+    "content": "Lunes a viernes 9:00-18:00 hrs.",
+    "collection_id": 1
+  },
+  {
+    "title": "Política de devoluciones",
+    "content": "Aceptamos devoluciones dentro de 30 días con boleta.",
+    "collection_id": 1
+  }
+]
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "summary": {
+    "total": 2,
+    "created": 1,
+    "updated": 1,
+    "skipped": 0,
+    "errors": 0
+  },
+  "details": [...]
+}
+```
+
+<Info>
+  El comportamiento es **upsert**: si ya existe un documento con el mismo título en la colección, se actualiza en lugar de crear un duplicado.
+</Info>
+
+---
+
+## Listar documentos
+
+```http
+GET /rag/documents?collection_id=1
+Authorization: Bearer <token>
+```
+
+---
+
+## Actualizar documento
+
+```http
+PUT /rag/documents/{id}
+Authorization: Bearer <token>
+```
+
+---
+
+## Eliminar documento
+
+```http
+DELETE /rag/documents/{id}
+Authorization: Bearer <token>
+```

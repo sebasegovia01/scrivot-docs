@@ -1,0 +1,59 @@
+---
+title: Signup
+api: POST /auth/signup
+description: Crear una nueva cuenta de usuario
+---
+
+<ParamField body="email" type="string" required>
+  Correo electrónico del nuevo usuario
+</ParamField>
+
+<ParamField body="password" type="string" required>
+  Contraseña (mínimo 8 caracteres)
+</ParamField>
+
+<ParamField body="first_name" type="string" required>
+  Nombre
+</ParamField>
+
+<ParamField body="last_name" type="string" required>
+  Apellido
+</ParamField>
+
+<ParamField body="workspace_id" type="number">
+  ID del workspace al que pertenece (opcional en registro inicial)
+</ParamField>
+
+<ParamField body="role_id" type="number">
+  ID del rol asignado
+</ParamField>
+
+<RequestExample>
+```bash cURL
+curl -X POST https://api.scrivot.cl/auth/signup \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "nuevo@empresa.cl",
+    "password": "miContraseña123",
+    "first_name": "Juan",
+    "last_name": "Pérez"
+  }'
+```
+</RequestExample>
+
+<ResponseExample>
+```json 201
+{
+  "user": {
+    "id": 42,
+    "email": "nuevo@empresa.cl",
+    "first_name": "Juan",
+    "last_name": "Pérez"
+  },
+  "api_key": "7e1a3486-8b23-45f1-b2ec-3bd95c50ae99",
+  "service_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "expires_in": 1751495233,
+  "domain": null
+}
+```
+</ResponseExample>

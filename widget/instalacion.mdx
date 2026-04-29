@@ -1,0 +1,145 @@
+---
+title: Instalación del widget
+description: Cómo agregar el chatbot de Scrivot a tu sitio web
+---
+
+## Obtener el script
+
+El script de instalación se genera automáticamente al crear un chatbot. Para obtenerlo:
+
+1. Ve a **Chatbots** en el dashboard
+2. Selecciona tu chatbot
+3. Haz clic en **Instalar widget**
+4. Copia el snippet generado
+
+El snippet tiene este formato:
+
+```html
+<script
+  src="https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN"
+  async
+></script>
+```
+
+<Info>
+  El parámetro `jwt` es el **Widget Token** — un JWT que identifica tu chatbot y workspace. Cada chatbot tiene su propio token.
+</Info>
+
+---
+
+## Instalación por plataforma
+
+<Tabs>
+  <Tab title="HTML puro">
+    Pega el script antes del cierre de `</body>`:
+
+    ```html
+    <body>
+      <!-- Tu contenido aquí -->
+
+      <script
+        src="https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN"
+        async
+      ></script>
+    </body>
+    ```
+  </Tab>
+
+  <Tab title="Next.js">
+    En tu layout raíz (`app/layout.tsx`):
+
+    ```tsx
+    import Script from 'next/script'
+
+    export default function RootLayout({ children }: { children: React.ReactNode }) {
+      return (
+        <html lang="es">
+          <body>
+            {children}
+            <Script
+              src="https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN"
+              strategy="lazyOnload"
+            />
+          </body>
+        </html>
+      )
+    }
+    ```
+  </Tab>
+
+  <Tab title="React (Vite / CRA)">
+    En tu `index.html`:
+
+    ```html
+    <script
+      src="https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN"
+      async
+    ></script>
+    ```
+
+    O como efecto en el componente raíz:
+
+    ```tsx
+    import { useEffect } from 'react'
+
+    export function ScrivotWidget() {
+      useEffect(() => {
+        const script = document.createElement('script')
+        script.src = 'https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN'
+        script.async = true
+        document.body.appendChild(script)
+        return () => document.body.removeChild(script)
+      }, [])
+      return null
+    }
+    ```
+  </Tab>
+
+  <Tab title="WordPress">
+    Ve a **Apariencia → Editor de temas → footer.php** y pega el script antes de `</body>`:
+
+    ```php
+    <script
+      src="https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN"
+      async
+    ></script>
+    <?php wp_footer(); ?>
+    </body>
+    ```
+
+    También puedes usar el plugin **Insert Headers and Footers** para evitar editar el tema directamente.
+  </Tab>
+
+  <Tab title="Webflow">
+    Ve a **Project Settings → Custom Code → Footer Code** y pega el script.
+  </Tab>
+</Tabs>
+
+---
+
+## Parámetros del script
+
+| Parámetro | Tipo | Requerido | Descripción |
+|---|---|---|---|
+| `jwt` | `string` | ✅ | Widget Token del chatbot |
+| `host` | `string` | ❌ | URL base del servicio widget (para self-hosted) |
+
+---
+
+## Verificar la instalación
+
+Después de instalar el script, recarga tu sitio. Deberías ver el botón flotante de Scrivot en la esquina inferior derecha.
+
+Si el widget **no aparece**:
+
+<AccordionGroup>
+  <Accordion title="El dominio no está autorizado">
+    Ve a **Workspace → Configuración → Dominios** y agrega el dominio donde está instalado. Ver [autorizar dominios](/widget/dominio).
+  </Accordion>
+  <Accordion title="El JWT es inválido o expirado">
+    Los widget tokens no expiran, pero pueden ser revocados. Regenera el token desde **Chatbots → [chatbot] → Instalar → Regenerar token**.
+  </Accordion>
+  <Accordion title="Error de CORS o red">
+    Abre las DevTools del navegador (F12) → pestaña **Console** y busca errores en rojo. Si ves un error `403`, confirma que el dominio está autorizado.
+  </Accordion>
+</AccordionGroup>

@@ -1,0 +1,141 @@
+---
+title: RAG (Base de conocimiento)
+description: Retrieval-Augmented Generation — alimenta tu chatbot con tu propio contenido
+---
+
+## Qué es RAG
+
+**RAG** (Retrieval-Augmented Generation) es la técnica que permite a Scrivot responder preguntas basándose en **tu propio contenido**, en lugar de depender solo del conocimiento general del modelo de IA.
+
+El flujo es:
+1. Cuando el usuario pregunta algo, Scrivot busca en tu base de conocimiento los fragmentos más relevantes
+2. Esos fragmentos se inyectan en el contexto del LLM
+3. El LLM genera una respuesta basada en **tu contenido específico**
+
+---
+
+## Colecciones y documentos
+
+### Colecciones
+
+Una colección es un **grupo de documentos** relacionados. Por ejemplo:
+
+- `FAQ Ventas`
+- `Manual de instalación`
+- `Políticas de la empresa`
+
+Cada chatbot puede estar vinculado a una o más colecciones.
+
+**Endpoints:**
+- `GET /rag/collections/workspace/:workspaceId` — listar colecciones
+- `POST /rag/collections` — crear colección
+- `DELETE /rag/collections/:id` — eliminar colección
+
+### Documentos
+
+Un documento contiene el conocimiento que el chatbot puede consultar. Puede ser:
+
+- Una pregunta frecuente y su respuesta
+- Un artículo de ayuda
+- Una política o procedimiento
+- Especificaciones técnicas de un producto
+
+**Campos de un documento:**
+
+| Campo | Tipo | Descripción |
+|---|---|---|
+| `title` | `string` | Título o pregunta del documento |
+| `content` | `string` | Contenido completo (hasta 50MB por request) |
+| `category` | `string` | Categoría para filtrar |
+| `tags` | `string[]` | Etiquetas adicionales |
+| `collection_id` | `number` | Colección a la que pertenece |
+
+---
+
+## Tipos de búsqueda
+
+### 1. Búsqueda vectorial (semántica)
+
+Busca documentos por **similitud de significado**, no por coincidencia de palabras exactas.
+
+```http
+POST /rag/search
+Authorization: Bearer <token>
+
+{
+  "query": "¿tienen envío a regiones?",
+  "collection_id": 5,
+  "limit": 3,
+  "format": "compact"
+}
+```
+
+Formatos de respuesta disponibles:
+
+| Formato | Descripción |
+|---|---|
+| `minimal` | Solo el contenido y score de relevancia |
+| `compact` | Contenido + metadata básica |
+| `full` | Documento completo con todos los campos |
+
+### 2. Búsqueda por thread
+
+El widget usa este endpoint para buscar contexto sin autenticación de usuario:
+
+```http
+POST /rag/search/thread
+
+{
+  "query": "horario de atención",
+  "thread_id": "abc-123"
+}
+```
+
+### 3. Búsqueda híbrida
+
+Combina búsqueda vectorial con filtros de metadata:
+
+```http
+POST /rag/search/hybrid
+Authorization: Bearer <token>
+
+{
+  "query": "política de devoluciones",
+  "collection_id": 5,
+  "filters": {
+    "category": "Soporte"
+  },
+  "limit": 5
+}
+```
+
+---
+
+## Integración con MCP
+
+Scrivot expone un endpoint compatible con **Model Context Protocol (MCP)**:
+
+```http
+POST /mcp/rag-search
+```
+
+Acepta peticiones JSON-RPC 2.0, lo que permite integrar la base de conocimiento de Scrivot con agentes externos y herramientas de IA que soporten MCP.
+
+---
+
+## Buenas prácticas
+
+<AccordionGroup>
+  <Accordion title="Escribe documentos concisos">
+    Documentos más cortos y enfocados producen mejores resultados que textos largos con múltiples temas mezclados. Divide un artículo largo en varios documentos por subtema.
+  </Accordion>
+  <Accordion title="Usa títulos descriptivos">
+    El título ayuda al sistema de búsqueda. Un título como *"Política de devolución para productos electrónicos"* es mejor que *"Devoluciones"*.
+  </Accordion>
+  <Accordion title="Organiza con categorías">
+    Usa el campo `category` para agrupar documentos. Luego puedes filtrar búsquedas por categoría para mayor precisión.
+  </Accordion>
+  <Accordion title="Mantén el contenido actualizado">
+    Cuando cambies precios, políticas o información del producto, actualiza los documentos correspondientes. El chatbot responderá con información desactualizada si no lo haces.
+  </Accordion>
+</AccordionGroup>
