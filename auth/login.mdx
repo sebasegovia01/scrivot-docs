@@ -1,0 +1,71 @@
+---
+title: Login
+description: Autenticarse en la API de Scrivot
+---
+
+## Endpoint
+
+```http
+POST /auth/login
+```
+
+## Request
+
+```json
+{
+  "email": "usuario@empresa.cl",
+  "password": "miContraseña123"
+}
+```
+
+## Response exitosa (200)
+
+```json
+{
+  "service_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "expires_in": 1751495233
+}
+```
+
+`expires_in` es el timestamp Unix de expiración (24 horas desde el login).
+
+---
+
+## Errores comunes
+
+| Código | HTTP | Descripción |
+|---|---|---|
+| `MISSING_CREDENTIALS` | 400 | Falta email o contraseña |
+| `INVALID_EMAIL_FORMAT` | 400 | Formato de email inválido |
+| `EMAIL_NOT_REGISTERED` | 404 | El email no está registrado |
+| `USER_INACTIVE` | 403 | Cuenta desactivada |
+| `INVALID_PASSWORD` | 401 | Contraseña incorrecta |
+
+**Ejemplo de error:**
+```json
+{
+  "statusCode": 401,
+  "message": "La contraseña es incorrecta",
+  "error": "Unauthorized",
+  "code": "INVALID_PASSWORD"
+}
+```
+
+---
+
+## Verificar email antes de login
+
+Usa `POST /auth/check-email` para saber si un email está registrado antes de mostrar el formulario de contraseña:
+
+```json
+// Request
+{ "email": "usuario@empresa.cl" }
+
+// Response
+{
+  "email": "usuario@empresa.cl",
+  "registered": true,
+  "active": true,
+  "message": "Email registrado y activo"
+}
+```

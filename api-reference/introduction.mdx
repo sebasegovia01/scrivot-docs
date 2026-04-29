@@ -1,0 +1,87 @@
+---
+title: Introducción a la API
+description: Base URL, autenticación y convenciones
+---
+
+## Base URL
+
+```
+https://api.scrivot.cl
+```
+
+---
+
+## Autenticación
+
+Todos los endpoints privados requieren un JWT en el header `Authorization`:
+
+```http
+Authorization: Bearer <service_token>
+```
+
+El `service_token` se obtiene en `POST /auth/login` o `POST /auth/signup`.
+
+<Note>
+  Los endpoints marcados como **Public** no requieren autenticación.
+</Note>
+
+---
+
+## Rate limiting
+
+La API tiene los siguientes límites por IP:
+
+| Endpoint | Límite |
+|---|---|
+| Todos los endpoints | 120 req/min |
+| `POST /auth/login` | 10 req/min |
+| `POST /auth/signup` | 5 req/min |
+| `POST /auth/forgot-password` | 5 req/min |
+| `POST /auth/resend-confirmation` | 5 req/min |
+
+Al superar el límite, la API retorna `429 Too Many Requests` con el header `Retry-After: 60`.
+
+---
+
+## Formato de respuesta
+
+Las respuestas son JSON. Los campos de fecha usan formato **ISO 8601**:
+
+```json
+{
+  "id": 1,
+  "name": "Mi chatbot",
+  "created_at": "2025-01-15T10:30:00.000Z",
+  "updated_at": "2025-04-29T14:22:00.000Z"
+}
+```
+
+---
+
+## Errores
+
+Los errores siguen un formato consistente:
+
+```json
+{
+  "statusCode": 403,
+  "message": "No tienes permisos para acceder a este recurso",
+  "error": "Forbidden",
+  "code": "INSUFFICIENT_PERMISSIONS"
+}
+```
+
+| HTTP | Significado |
+|---|---|
+| 400 | Bad Request — parámetros inválidos |
+| 401 | Unauthorized — token inválido o expirado |
+| 403 | Forbidden — sin permisos |
+| 404 | Not Found — recurso no existe |
+| 429 | Too Many Requests — rate limit alcanzado |
+| 500 | Internal Server Error |
+
+---
+
+## Aislamiento por workspace
+
+Todos los datos están **aislados por workspace**. Un usuario solo puede acceder a los recursos de su propio workspace. Los superadmins (`role_id: 1`) tienen acceso a todos los workspaces.

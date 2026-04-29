@@ -1,0 +1,22 @@
+---
+title: Idiomas
+description: Configura el chatbot para múltiples idiomas
+---
+
+## Idioma principal
+
+Al crear un chatbot se define el **idioma principal** mediante `primary_language_id`. Este determina el idioma predeterminado del widget y las respuestas del asistente.
+
+---
+
+## Agregar idiomas adicionales
+
+Desde **Chatbots → [tu chatbot] → Idiomas**, puedes agregar idiomas alternativos. El agente detecta automáticamente el idioma de la pregunta del usuario y responde en el mismo idioma, siempre que esté configurado.
+
+---
+
+## Recomendaciones
+
+- Escribe el **system prompt en el idioma principal** del chatbot.
+- Si tu chatbot atiende usuarios en múltiples idiomas, incluye en el system prompt una indicación como: *"Responde siempre en el idioma del usuario."*
+- La base RAG puede contener documentos en múltiples idiomas — la búsqueda semántica funciona de forma multilingüe.

@@ -1,0 +1,45 @@
+---
+title: Generar widget token
+api: POST /auth/generate-widget-token
+description: Generar el JWT para embeber el widget en un sitio externo
+---
+
+<Note>
+  Requiere autenticación. El chatbot debe pertenecer al mismo workspace del usuario autenticado.
+</Note>
+
+<ParamField body="chatbotId" type="number" required>
+  ID del chatbot para el que se genera el token
+</ParamField>
+
+<RequestExample>
+```bash cURL
+curl -X POST https://api.scrivot.cl/auth/generate-widget-token \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <service_token>" \
+  -d '{"chatbotId": 3}'
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "widget_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "type": "widget",
+  "expires": "never",
+  "chatbot_id": 3,
+  "workspace_id": 7,
+  "chatbot_name": "Asistente Ventas",
+  "message": "Token de widget generado y almacenado exitosamente"
+}
+```
+
+```json 403
+{
+  "statusCode": 403,
+  "message": "No tienes permisos para generar tokens para este chatbot",
+  "error": "Forbidden",
+  "code": "INSUFFICIENT_PERMISSIONS"
+}
+```
+</ResponseExample>

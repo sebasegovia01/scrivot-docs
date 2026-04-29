@@ -1,0 +1,49 @@
+---
+title: Consultar uso
+api: GET /billing/workspace/{workspaceId}/usage
+description: Obtener el uso actual de conversaciones del mes
+---
+
+<Note>
+  Este endpoint es accesible con tokens de tipo `widget` y `user`. Es llamado automáticamente por el widget antes de iniciar nuevas conversaciones.
+</Note>
+
+<ParamField path="workspaceId" type="number" required>
+  ID del workspace
+</ParamField>
+
+<RequestExample>
+```bash cURL
+curl https://api.scrivot.cl/billing/workspace/7/usage \
+  -H "Authorization: Bearer <token>"
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200 - Plan Free (dentro del límite)
+{
+  "allowed": true,
+  "used": 18,
+  "limit": 30,
+  "plan": "free"
+}
+```
+
+```json 200 - Plan Free (límite alcanzado)
+{
+  "allowed": false,
+  "used": 30,
+  "limit": 30,
+  "plan": "free"
+}
+```
+
+```json 200 - Plan Pro (ilimitado)
+{
+  "allowed": true,
+  "used": 847,
+  "limit": null,
+  "plan": "pro"
+}
+```
+</ResponseExample>

@@ -1,0 +1,63 @@
+---
+title: Configuración del widget
+description: Comportamiento, mensajes y opciones avanzadas
+---
+
+## Comportamiento
+
+Desde el dashboard, en **Widget → Comportamiento**, puedes ajustar cómo se presenta el chatbot a los usuarios.
+
+### Apertura automática
+
+| Opción | Descripción |
+|---|---|
+| **Auto-abrir** | El chat se abre solo al cargar la página |
+| **Delay** | Segundos que espera antes de abrirse (ej. `5` = 5 segundos) |
+| **Mostrar en móvil** | Si el auto-abrir aplica también en dispositivos móviles |
+
+### Modos de visualización
+
+| Modo | Descripción |
+|---|---|
+| `standard` | Ventana de chat clásica (por defecto) |
+| `compact` | Versión reducida, ideal para barras laterales |
+| `full` | Pantalla completa dentro de tu sitio |
+
+### Otras opciones
+
+- **Botón de reinicio**: Muestra un botón para limpiar la conversación
+- **Posición**: `bottom-right` (predeterminado) o `bottom-left`
+
+---
+
+## Mensajes del widget
+
+En **Widget → Mensajes** configuras los textos que ve el usuario:
+
+| Campo | Ejemplo | Descripción |
+|---|---|---|
+| **Mensaje de bienvenida** | `"¡Hola! ¿En qué puedo ayudarte?"` | Primer mensaje al abrir el chat |
+| **Mensaje inicial** | `"Soy el asistente virtual de Acme."` | Descripción breve del chatbot |
+| **Sugerencias** | `["¿Cómo compro?", "¿Tienen envíos?"]` | Botones de respuesta rápida |
+
+---
+
+## Persistencia de conversaciones
+
+El widget guarda el `thread_id` en `localStorage` del navegador. Esto significa que:
+
+- Si el usuario recarga la página, **la conversación continúa** desde donde quedó.
+- Si el usuario borra las cookies/localStorage, **comienza una conversación nueva**.
+- Cada dispositivo/navegador tiene su propia sesión.
+
+---
+
+## Límite de conversaciones
+
+En el plan **Free**, el workspace tiene un límite de **30 conversaciones por mes**. Al alcanzar el límite:
+
+- Las conversaciones activas **no se cortan** — solo se bloquean nuevas.
+- El widget muestra una pantalla informativa al usuario.
+- El límite se reinicia el **primer día de cada mes**.
+
+Para conversaciones ilimitadas, [actualiza a Pro](/billing/planes).

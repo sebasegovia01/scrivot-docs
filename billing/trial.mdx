@@ -1,0 +1,49 @@
+---
+title: Prueba gratuita
+description: 30 días de Pro sin costo
+---
+
+## Trial de 30 días
+
+Cada workspace puede activar **una prueba gratuita de 30 días** del plan Pro. Durante el trial tienes acceso a todas las funcionalidades Pro sin límite de conversaciones.
+
+### Activar el trial
+
+Desde el dashboard, ve a **Workspace → Billing → Iniciar prueba gratuita**.
+
+O via API:
+
+```http
+POST /billing/workspace/:workspaceId/start-trial
+Authorization: Bearer <token>
+```
+
+### Condiciones
+
+- Solo se puede activar **una vez por workspace**
+- No se requiere tarjeta de crédito para iniciar
+- 5 días antes del vencimiento recibirás un email de aviso
+- Al vencer, el workspace vuelve automáticamente al plan **Free**
+
+### Estado del trial
+
+```http
+GET /billing/workspace/:workspaceId
+```
+
+```json
+{
+  "plan": "pro",
+  "status": "trialing",
+  "trial_ends_at": "2025-05-29T00:00:00.000Z",
+  "current_period_ends_at": null
+}
+```
+
+| `status` | Descripción |
+|---|---|
+| `none` | Sin suscripción activa (plan Free) |
+| `trialing` | En período de prueba |
+| `active` | Suscripción paga activa |
+| `canceled` | Cancelada, acceso hasta fin del período |
+| `paused` | Suscripción pausada |

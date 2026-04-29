@@ -1,0 +1,87 @@
+---
+title: Tokens y autenticación
+description: Tipos de tokens en Scrivot y cómo usarlos
+---
+
+## Tipos de tokens
+
+Scrivot usa tres tipos de credenciales:
+
+### 1. Service Token (JWT de usuario)
+
+Autenticación estándar para el dashboard y la API.
+
+| Campo | Valor |
+|---|---|
+| **Tipo** | JWT Bearer |
+| **Expiración** | 24 horas |
+| **Uso** | `Authorization: Bearer <token>` |
+| **Obtención** | `POST /auth/login` o `POST /auth/signup` |
+
+**Payload:**
+```json
+{
+  "sub": 42,
+  "userId": 42,
+  "email": "usuario@empresa.cl",
+  "workspace_id": 7,
+  "role_id": 2,
+  "type": "user"
+}
+```
+
+---
+
+### 2. Widget Token (JWT del widget)
+
+Token especial para el widget embebido. No expira y está vinculado a un chatbot específico.
+
+| Campo | Valor |
+|---|---|
+| **Tipo** | JWT Bearer |
+| **Expiración** | Nunca (hasta que se revoque) |
+| **Uso** | Parámetro `?jwt=<token>` en el script del widget |
+| **Obtención** | Automático al crear un chatbot, o `POST /auth/generate-widget-token` |
+
+**Payload:**
+```json
+{
+  "userId": 42,
+  "email": "usuario@empresa.cl",
+  "workspace_id": 7,
+  "chatbot_id": 3,
+  "role_id": 2,
+  "type": "widget"
+}
+```
+
+<Warning>
+  El widget token es **público** (va embebido en tu HTML). No incluye información sensible, pero está vinculado a tu workspace y chatbot. No lo reutilices entre chatbots distintos.
+</Warning>
+
+---
+
+### 3. API Key
+
+Reservado para integraciones futuras. Se genera al registrarse pero actualmente no está activo en los endpoints.
+
+---
+
+## Roles
+
+| `role_id` | Nombre | Descripción |
+|---|---|---|
+| `1` | Superadmin | Acceso total a todos los workspaces |
+| `2` | Admin | Acceso completo a su workspace |
+| `3` | Agente | Acceso limitado (sin configuración) |
+
+---
+
+## Seguridad
+
+- Todos los endpoints privados requieren el header `Authorization: Bearer <token>`
+- Los endpoints públicos están marcados con `@Public()` y no requieren autenticación
+- El rate limiting protege los endpoints de auth:
+  - Login: **10 intentos/minuto** por IP
+  - Signup: **5 intentos/minuto** por IP
+  - Recuperar contraseña: **5 intentos/minuto** por IP

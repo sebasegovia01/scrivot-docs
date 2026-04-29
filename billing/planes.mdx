@@ -1,0 +1,78 @@
+---
+title: Planes
+description: Comparativa de planes Free, Pro y Enterprise
+---
+
+## Comparativa de planes
+
+<CardGroup cols={3}>
+  <Card title="Free" icon="seedling">
+    **$0/mes**
+
+    - 1 chatbot
+    - 30 conversaciones/mes
+    - 15 intenciones (RAG)
+    - Apariencia del widget
+    - Sistema de valoraciones
+    - Dashboard básico
+    - Tickets de soporte
+  </Card>
+
+  <Card title="Pro" icon="bolt">
+    **Desde $X/mes**
+
+    - Todo lo del Free, más:
+    - Conversaciones ilimitadas
+    - Intenciones ilimitadas
+    - Monitoreo en tiempo real
+    - Modo humano (handoff)
+    - Widget completo (comportamiento avanzado)
+    - Hasta 3 miembros del equipo
+    - Analytics avanzados
+  </Card>
+
+  <Card title="Enterprise" icon="building">
+    **Precio personalizado**
+
+    - Todo lo del Pro, más:
+    - Múltiples chatbots
+    - Miembros ilimitados
+    - SSO, auditoría y SLA garantizado
+    - Integraciones y white-label
+    - API personalizada
+    - Soporte dedicado
+  </Card>
+</CardGroup>
+
+---
+
+## Límite de conversaciones (Free)
+
+El plan Free tiene un límite de **30 conversaciones por mes calendario** (contadas en zona horaria America/Santiago).
+
+- El límite se reinicia el **1 de cada mes**
+- Las conversaciones activas no se cortan al alcanzar el límite
+- Al alcanzar el límite, **no se permiten nuevas conversaciones** hasta el próximo mes o hasta actualizar el plan
+
+Para verificar el uso actual:
+
+```http
+GET /billing/workspace/:workspaceId/usage
+```
+
+```json
+{
+  "allowed": false,
+  "used": 30,
+  "limit": 30,
+  "plan": "free"
+}
+```
+
+---
+
+## Cambiar de plan
+
+Para actualizar al plan Pro, ve a **Workspace → Billing → Suscribirse** y selecciona el intervalo de facturación (mensual o anual).
+
+El pago se procesa a través de **MercadoPago**.

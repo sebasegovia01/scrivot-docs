@@ -1,0 +1,97 @@
+---
+title: Intenciones
+description: Define sobre qué temas responde tu chatbot
+---
+
+## Qué son las intenciones
+
+Las intenciones son los **temas y respuestas predefinidas** que conoce tu chatbot. Se almacenan como documentos en tu base RAG y son la principal fuente de conocimiento del asistente.
+
+Cuantas más intenciones y más detalladas sean, mejor será la calidad de las respuestas.
+
+---
+
+## Crear intenciones
+
+### Manualmente (una a una)
+
+1. Ve a **RAG → Colecciones** y crea una colección (ej. `"FAQ Productos"`)
+2. Dentro de la colección, haz clic en **Nuevo documento**
+3. Escribe el título (la pregunta o tema) y el contenido (la respuesta esperada)
+4. Guarda — el documento se vectoriza automáticamente
+
+### Importación masiva (CSV)
+
+Para cargar muchas intenciones a la vez, usa **RAG → Documentos → Importar CSV**:
+
+```csv
+title,content,category
+"¿Cuál es el horario de atención?","Atendemos de lunes a viernes de 9:00 a 18:00 hrs.","FAQ"
+"¿Cómo hago una devolución?","Puedes solicitar devolución dentro de 30 días enviando un email a...","Soporte"
+"¿Tienen envío a regiones?","Sí, despachamos a todo Chile con un costo de $3.990.","Envíos"
+```
+
+El endpoint `POST /rag/documents/batch-intentions` retorna un resumen:
+
+```json
+{
+  "success": true,
+  "summary": {
+    "total": 50,
+    "created": 45,
+    "updated": 3,
+    "skipped": 2,
+    "errors": 0
+  }
+}
+```
+
+<Info>
+  Si ya existe un documento con el mismo título, se **actualiza** en lugar de crear un duplicado (comportamiento upsert).
+</Info>
+
+---
+
+## Límites por plan
+
+| Plan | Intenciones |
+|---|---|
+| **Free** | 15 intenciones |
+| **Pro** | Ilimitadas |
+| **Enterprise** | Ilimitadas |
+
+---
+
+## Colecciones
+
+Las colecciones permiten organizar las intenciones por categoría y asignarlas selectivamente a chatbots.
+
+Un chatbot puede estar vinculado a una o varias colecciones. Solo busca en las colecciones que tiene asignadas.
+
+### Ejemplo de estructura
+
+```
+📁 FAQ General
+   ├── Horario de atención
+   ├── Medios de pago
+   └── Políticas de devolución
+
+📁 Productos
+   ├── Descripción Producto A
+   ├── Descripción Producto B
+   └── Comparativa A vs B
+
+📁 Soporte Técnico
+   ├── Cómo instalar X
+   └── Solución de errores comunes
+```
+
+---
+
+## Búsqueda semántica
+
+Scrivot no busca palabras exactas — usa **embeddings vectoriales** para encontrar el documento más relevante semánticamente.
+
+Esto significa que si un usuario pregunta *"¿a qué hora cierran?"*, el chatbot encontrará la intención *"¿Cuál es el horario de atención?"* aunque las palabras sean diferentes.
+
+Para mayor precisión, puedes usar la **búsqueda híbrida** que combina similitud semántica + filtros de metadata.
