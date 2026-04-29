@@ -9,8 +9,8 @@ description: Retrieval-Augmented Generation — alimenta tu chatbot con tu propi
 
 El flujo es:
 1. Cuando el usuario pregunta algo, Scrivot busca en tu base de conocimiento los fragmentos más relevantes
-2. Esos fragmentos se inyectan en el contexto del LLM
-3. El LLM genera una respuesta basada en **tu contenido específico**
+2. Esos fragmentos se inyectan como contexto en el modelo de IA
+3. El modelo genera una respuesta basada en **tu contenido específico**
 
 ---
 
@@ -45,7 +45,7 @@ Un documento contiene el conocimiento que el chatbot puede consultar. Puede ser:
 | Campo | Tipo | Descripción |
 |---|---|---|
 | `title` | `string` | Título o pregunta del documento |
-| `content` | `string` | Contenido completo (hasta 50MB por request) |
+| `content` | `string` | Contenido completo (hasta 50MB por solicitud) |
 | `category` | `string` | Categoría para filtrar |
 | `tags` | `string[]` | Etiquetas adicionales |
 | `collection_id` | `number` | Colección a la que pertenece |
@@ -74,11 +74,11 @@ Formatos de respuesta disponibles:
 
 | Formato | Descripción |
 |---|---|
-| `minimal` | Solo el contenido y score de relevancia |
-| `compact` | Contenido + metadata básica |
+| `minimal` | Solo el contenido y puntuación de relevancia |
+| `compact` | Contenido + metadatos básicos |
 | `full` | Documento completo con todos los campos |
 
-### 2. Búsqueda por thread
+### 2. Búsqueda por conversación
 
 El widget usa este endpoint para buscar contexto sin autenticación de usuario:
 
@@ -93,7 +93,7 @@ POST /rag/search/thread
 
 ### 3. Búsqueda híbrida
 
-Combina búsqueda vectorial con filtros de metadata:
+Combina búsqueda vectorial con filtros de metadatos:
 
 ```http
 POST /rag/search/hybrid

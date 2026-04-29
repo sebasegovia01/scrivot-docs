@@ -1,5 +1,5 @@
 ---
-title: Login
+title: Inicio de sesión
 description: Autenticarse en la API de Scrivot
 ---
 
@@ -9,7 +9,7 @@ description: Autenticarse en la API de Scrivot
 POST /auth/login
 ```
 
-## Request
+## Solicitud
 
 ```json
 {
@@ -18,7 +18,7 @@ POST /auth/login
 }
 ```
 
-## Response exitosa (200)
+## Respuesta exitosa (200)
 
 ```json
 {
@@ -27,7 +27,7 @@ POST /auth/login
 }
 ```
 
-`expires_in` es el timestamp Unix de expiración (24 horas desde el login).
+`expires_in` es el timestamp Unix de expiración (24 horas desde el inicio de sesión).
 
 ---
 
@@ -35,9 +35,9 @@ POST /auth/login
 
 | Código | HTTP | Descripción |
 |---|---|---|
-| `MISSING_CREDENTIALS` | 400 | Falta email o contraseña |
-| `INVALID_EMAIL_FORMAT` | 400 | Formato de email inválido |
-| `EMAIL_NOT_REGISTERED` | 404 | El email no está registrado |
+| `MISSING_CREDENTIALS` | 400 | Falta correo o contraseña |
+| `INVALID_EMAIL_FORMAT` | 400 | Formato de correo inválido |
+| `EMAIL_NOT_REGISTERED` | 404 | El correo no está registrado |
 | `USER_INACTIVE` | 403 | Cuenta desactivada |
 | `INVALID_PASSWORD` | 401 | Contraseña incorrecta |
 
@@ -53,15 +53,15 @@ POST /auth/login
 
 ---
 
-## Verificar email antes de login
+## Verificar correo antes de iniciar sesión
 
-Usa `POST /auth/check-email` para saber si un email está registrado antes de mostrar el formulario de contraseña:
+Usa `POST /auth/check-email` para saber si un correo está registrado antes de mostrar el formulario de contraseña:
 
 ```json
-// Request
+// Solicitud
 { "email": "usuario@empresa.cl" }
 
-// Response
+// Respuesta
 {
   "email": "usuario@empresa.cl",
   "registered": true,

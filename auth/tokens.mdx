@@ -7,7 +7,7 @@ description: Tipos de tokens en Scrivot y cómo usarlos
 
 Scrivot usa tres tipos de credenciales:
 
-### 1. Service Token (JWT de usuario)
+### 1. Token de servicio (JWT de usuario)
 
 Autenticación estándar para el dashboard y la API.
 
@@ -18,7 +18,7 @@ Autenticación estándar para el dashboard y la API.
 | **Uso** | `Authorization: Bearer <token>` |
 | **Obtención** | `POST /auth/login` o `POST /auth/signup` |
 
-**Payload:**
+**Contenido del token:**
 ```json
 {
   "sub": 42,
@@ -32,7 +32,7 @@ Autenticación estándar para el dashboard y la API.
 
 ---
 
-### 2. Widget Token (JWT del widget)
+### 2. Token de widget (JWT del widget)
 
 Token especial para el widget embebido. No expira y está vinculado a un chatbot específico.
 
@@ -43,7 +43,7 @@ Token especial para el widget embebido. No expira y está vinculado a un chatbot
 | **Uso** | Parámetro `?jwt=<token>` en el script del widget |
 | **Obtención** | Automático al crear un chatbot, o `POST /auth/generate-widget-token` |
 
-**Payload:**
+**Contenido del token:**
 ```json
 {
   "userId": 42,
@@ -56,14 +56,14 @@ Token especial para el widget embebido. No expira y está vinculado a un chatbot
 ```
 
 <Warning>
-  El widget token es **público** (va embebido en tu HTML). No incluye información sensible, pero está vinculado a tu workspace y chatbot. No lo reutilices entre chatbots distintos.
+  El token de widget es **público** (va embebido en tu HTML). No incluye información sensible, pero está vinculado a tu workspace y chatbot. No lo reutilices entre chatbots distintos.
 </Warning>
 
 ---
 
-### 3. API Key
+### 3. Clave de API
 
-Reservado para integraciones futuras. Se genera al registrarse pero actualmente no está activo en los endpoints.
+Reservada para integraciones futuras. Se genera al registrarse pero actualmente no está activa en los endpoints.
 
 ---
 
@@ -79,9 +79,9 @@ Reservado para integraciones futuras. Se genera al registrarse pero actualmente 
 
 ## Seguridad
 
-- Todos los endpoints privados requieren el header `Authorization: Bearer <token>`
-- Los endpoints públicos están marcados con `@Public()` y no requieren autenticación
-- El rate limiting protege los endpoints de auth:
-  - Login: **10 intentos/minuto** por IP
-  - Signup: **5 intentos/minuto** por IP
-  - Recuperar contraseña: **5 intentos/minuto** por IP
+- Todos los endpoints privados requieren el encabezado `Authorization: Bearer <token>`
+- Los endpoints públicos no requieren autenticación
+- Límite de solicitudes por IP en los endpoints de acceso:
+  - Inicio de sesión: **10 intentos/minuto**
+  - Registro: **5 intentos/minuto**
+  - Recuperar contraseña: **5 intentos/minuto**
