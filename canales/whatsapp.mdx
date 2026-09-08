@@ -1,0 +1,91 @@
+---
+title: WhatsApp
+description: Atiende desde tu número de WhatsApp Business con el mismo asistente
+---
+
+## Qué necesitas
+
+<Check>Una cuenta de Meta (Facebook).</Check>
+<Check>
+  Un número **libre**: que no esté dado de alta en WhatsApp personal ni en la app de
+  WhatsApp Business.
+</Check>
+
+Recomendamos además
+[verificar tu negocio en Meta](https://business.facebook.com/settings/security/). No es
+obligatorio para empezar, pero el canal es más estable y se levantan los límites de envío
+que Meta aplica a las cuentas sin verificar.
+
+<Warning>
+  El número no puede estar en uso en otra app de WhatsApp. Si ya lo usas en tu teléfono,
+  tendrás que darlo de baja allí primero o usar otro número.
+</Warning>
+
+---
+
+## Conectar
+
+Durante la configuración inicial aparece en el paso **WhatsApp**, y se puede saltar. Si lo
+saltas, después está en **Integraciones → WhatsApp**.
+
+<Steps>
+  <Step title="Pulsa conectar">
+    Se abre la ventana de Meta.
+  </Step>
+  <Step title="Autoriza con tu cuenta de Meta">
+    Eliges o creas la cuenta de WhatsApp Business y el número.
+  </Step>
+  <Step title="Verifica el número">
+    Meta envía un código al número por SMS o llamada.
+  </Step>
+</Steps>
+
+La conexión usa la **API oficial de WhatsApp Cloud** de Meta. No hay teléfonos conectados
+ni sesiones que se caigan.
+
+---
+
+## Qué ve el cliente
+
+Escribe a tu número como a cualquier otro contacto. Mientras el asistente prepara la
+respuesta ve los **tres puntitos** de "escribiendo", igual que en una conversación normal,
+y el mensaje aparece como leído.
+
+Los saludos sueltos —«hola», «buenas»— se responden al instante con tu mensaje de
+bienvenida, sin pasar por el modelo. Es más rápido y no consume nada.
+
+---
+
+## Conversaciones y cierre
+
+Cada conversación funciona igual que en los demás canales: la atiende el asistente, puede
+pasar a tu equipo, y se cierra al terminar o por inactividad. Ver
+[Traspaso a una persona](/canales/traspaso-humano).
+
+Cuando una conversación se cierra y el cliente vuelve a escribir, **empieza una nueva**. No
+se reabre la anterior: el historial queda separado por conversación y las métricas cuadran.
+
+Si tienes la valoración activada, al cerrarse llega un mensaje con emojis del 1 al 5 y el
+cliente responde con el número.
+
+---
+
+## Límites de Meta que conviene conocer
+
+Estas reglas son de WhatsApp, no de Scrivot:
+
+- **Ventana de 24 horas.** Puedes responder libremente durante las 24 horas siguientes al
+  último mensaje del cliente. Pasado ese plazo, solo se puede iniciar la conversación con
+  una plantilla aprobada por Meta.
+- **Límites de envío.** Las cuentas nuevas empiezan con un tope diario de conversaciones
+  iniciadas, que Meta va subiendo con el uso y con el negocio verificado.
+
+---
+
+## Si no llegan los mensajes
+
+1. **Revisa el estado en Integraciones.** Tiene que decir conectado.
+2. **Comprueba que el número es el correcto** y que no lo diste de alta en la app de
+   WhatsApp Business después de conectarlo — eso rompe la conexión.
+3. **Mira si Meta pide alguna acción**: a veces exige volver a aceptar permisos o completar
+   la verificación del negocio.

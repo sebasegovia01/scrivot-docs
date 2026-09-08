@@ -48,6 +48,15 @@
       ]
     },
     {
+      "group": "Canales",
+      "pages": [
+        "canales/whatsapp",
+        "canales/instagram",
+        "canales/slack",
+        "canales/traspaso-humano"
+      ]
+    },
+    {
       "group": "Widget",
       "pages": [
         "widget/instalacion",
@@ -62,7 +71,14 @@
         "chatbot/overview",
         "chatbot/intenciones",
         "chatbot/rag",
+        "chatbot/desde-url",
         "chatbot/idiomas"
+      ]
+    },
+    {
+      "group": "Ventas",
+      "pages": [
+        "ventas/productos"
       ]
     },
     {

@@ -1,0 +1,68 @@
+---
+title: Vender por chat
+description: Carga tu catálogo para que el asistente recomiende y cobre
+---
+
+## Qué hace
+
+Si le cargas tu catálogo, el asistente puede recomendar productos según lo que el cliente
+pide y —conectando Mercado Pago— generar un enlace de pago dentro de la misma
+conversación. Sin cambiar de canal ni mandar a nadie a otra parte.
+
+Funciona en los tres canales.
+
+---
+
+## Activarlo
+
+Se elige al configurar el asistente: al indicar que su objetivo es **vender**, aparecen el
+catálogo y el paso de Mercado Pago. Si lo configuraste como informativo, puedes cambiarlo
+en **Configuración del chatbot**.
+
+---
+
+## El catálogo
+
+Cada producto lleva:
+
+| Campo | Para qué |
+|---|---|
+| **Nombre** | Con lo que el cliente lo va a nombrar |
+| **Descripción** | Lo que el asistente usa para saber cuándo recomendarlo |
+| **Precio** | Lo que se cobra |
+| **SKU** | Identificador único; evita duplicados al recargar el catálogo |
+
+La descripción es la que más pesa: el asistente busca por significado, no por palabras
+exactas. Una descripción que explica **para qué sirve y a quién le sirve** se recomienda
+bien; una que solo repite el nombre, no.
+
+Los productos se cargan desde **Productos**, uno a uno o en lote.
+
+---
+
+## Cobrar con Mercado Pago
+
+<Warning>
+  **Por ahora solo cuentas de Mercado Pago de Chile.** La conexión comprueba el país de tu
+  cuenta al vincularla y rechaza las de otros países.
+
+  El motivo es honesto: la lógica de moneda contempla los demás países, pero solo se ha
+  podido probar de verdad con una cuenta chilena, y habilitar sin comprobar es cómo se
+  cobran importes equivocados.
+</Warning>
+
+Se conecta en **Ajustes de ventas → Mercado Pago**, autorizando con tu cuenta. Los pagos
+llegan directamente a ella; Scrivot no toca el dinero.
+
+Una vez conectado, el asistente puede generar enlaces de pago con el producto y el importe
+ya cargados. Cuando el cliente paga, la conversación queda marcada con la venta.
+
+---
+
+## Qué le muestra al cliente
+
+El asistente recomienda a partir de lo que hay en tu catálogo. No inventa productos ni
+precios: si no está cargado, no lo ofrece.
+
+Si te preguntan por algo que no tienes, lo dice. Es preferible a improvisar una respuesta
+que después no puedas cumplir.

@@ -1,0 +1,111 @@
+---
+title: Traspaso a una persona
+description: Cuándo entra tu equipo, cómo se avisa y cuándo se cierra una conversación
+---
+
+## Los tres estados de una conversación
+
+Funciona igual en los tres canales.
+
+| Estado | Qué significa |
+|---|---|
+| **Atendida por el bot** | El asistente responde. Es lo normal. |
+| **Espera persona** | El cliente pidió hablar con alguien y **todavía nadie la tomó**. |
+| **Tomada** | Alguien de tu equipo la tiene. El asistente deja de responder. |
+
+<Note>
+  "Espera persona" es *pidió y nadie vino*, no *nadie la ha mirado*. Si alguien la toma,
+  responde y la devuelve al bot, deja de estar en espera aunque el cliente vuelva a
+  escribir después.
+</Note>
+
+---
+
+## Cuándo se pide una persona
+
+El asistente deriva solo cuando el cliente lo pide, o cuando la pregunta queda fuera de lo
+que sabe responder. En cuanto ocurre, tu equipo recibe un aviso.
+
+---
+
+## Cómo se avisa
+
+<CardGroup cols={2}>
+  <Card title="Aviso del navegador" icon="bell">
+    Llega al panel de quien lo tenga activado, aunque tenga la pestaña en segundo plano.
+  </Card>
+  <Card title="Slack" icon="slack">
+    La conversación llega al canal que elijas, y se puede responder desde ahí. Ver
+    [Slack](/canales/slack).
+  </Card>
+</CardGroup>
+
+Si nadie la toma pasado un rato, se envía **un** recordatorio. Solo uno, y solo para
+conversaciones que pidieron a una persona: recordar en bucle, o avisar de conversaciones
+que el bot resolvió bien, convierte la campana en ruido y termina con el equipo
+apagándola, que es justo lo que el aviso venía a evitar.
+
+---
+
+## Tomar y devolver
+
+Desde el panel, en la conversación:
+
+<Steps>
+  <Step title="Tomar la conversación">
+    El asistente deja de responder. A partir de ahí escribes tú, y el cliente ve tu nombre.
+  </Step>
+  <Step title="Responder">
+    Los mensajes salen por el mismo canal por el que escribió el cliente.
+  </Step>
+  <Step title="Devolver al bot">
+    El asistente retoma. Si el cliente vuelve a pedir una persona más adelante, se avisa de
+    nuevo: cada petición abre su propio ciclo.
+  </Step>
+</Steps>
+
+---
+
+## Cuándo se cierra una conversación
+
+Una conversación se cierra de dos maneras.
+
+### Alguien la cierra
+
+Desde el panel, cuando el tema quedó resuelto.
+
+### Se cierra sola por inactividad
+
+Si pasa un rato sin mensajes, se cierra sin que nadie haga nada. El reloj se **reinicia
+con cada mensaje**: mientras la conversación siga viva, no se cierra.
+
+| Situación | Tiempo por defecto |
+|---|---|
+| La atiende el bot | 15 minutos de silencio |
+| La tiene una persona | 60 minutos de silencio |
+
+Ambos se configuran por workspace.
+
+<Note>
+  **Una conversación que nunca empezó no se cierra.** Abrir el widget y no escribir nada
+  crea un hilo, pero eso no es una conversación: no aparece en tu lista y no se le pide
+  valoración a nadie. Solo se cierra lo que llegó a tener al menos un mensaje del cliente.
+</Note>
+
+Tampoco se cierran las que están **esperando a una persona**: mientras haya alguien al otro
+lado sin respuesta, la conversación sigue abierta por muchos días que pasen.
+
+---
+
+## Valoración al cerrar
+
+Si la tienes activada, al cerrarse se le pide al cliente que puntúe la atención del 1 al 5.
+
+Se pide **al cerrar**, no durante. Antes aparecía tras unos minutos de silencio y se
+pintaba encima del chat: si el cliente estaba escribiendo, le tapaba el cuadro de texto. Al
+final del todo es cuando valorar tiene sentido y cuando ya no estorba.
+
+En WhatsApp e Instagram llega como un mensaje con emojis del 1 al 5, y el cliente responde
+con el número.
+
+Después de valorar —o de saltarlo— puede empezar una conversación nueva cuando quiera.

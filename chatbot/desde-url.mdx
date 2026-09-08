@@ -1,0 +1,126 @@
+---
+title: Cargar desde una página web
+description: Alimenta al asistente con el contenido de una dirección, sin copiar y pegar
+---
+
+## Para qué sirve
+
+En vez de copiar tu contenido a mano, le das una dirección y Scrivot toma el texto de esa
+página. Sirve para tu documentación, tus preguntas frecuentes, tus condiciones de servicio
+o cualquier página pública que el asistente deba conocer.
+
+La ventaja real no es ahorrarse el copiar y pegar: es que **la página queda como fuente
+única**. Escribes una vez donde ya escribías, y el asistente aprende de lo mismo que lee
+tu cliente. Sin esto, cada cambio hay que trasladarlo a mano y las dos versiones se
+separan en semanas.
+
+---
+
+## Cargar una página
+
+Necesitas la dirección completa, y tiene que ser **pública**: si la página pide contraseña
+o está en una red interna, Scrivot no puede leerla.
+
+```http
+POST /rag-documents/from-url
+```
+
+```json
+{
+  "collection_id": 12,
+  "url": "https://miempresa.cl/preguntas-frecuentes"
+}
+```
+
+La respuesta dice qué pasó:
+
+```json
+{
+  "url": "https://miempresa.cl/preguntas-frecuentes",
+  "titulo": "Preguntas frecuentes",
+  "creados": 14,
+  "reemplazados": 0,
+  "truncado": false
+}
+```
+
+---
+
+## Volver a cargarla la mantiene al día
+
+Cargar **la misma dirección** otra vez reemplaza lo anterior, no lo duplica. Ese es el
+número `reemplazados` de la respuesta.
+
+<Warning>
+  Es la diferencia entre una base de conocimiento viva y una que envejece. Si al
+  actualizar se acumularan las dos versiones, la vieja seguiría apareciendo en las
+  búsquedas y el asistente respondería la verdad anterior parte de las veces — peor que no
+  saber nada.
+</Warning>
+
+Cuando cambies la página, vuelve a cargarla y listo.
+
+---
+
+## Cómo se parte el contenido
+
+El texto se corta **por encabezados**, no cada tantos caracteres. Un corte a ciegas parte
+las frases por la mitad y deja fragmentos que, recuperados sueltos, no responden nada.
+
+Cada sección se guarda con su encabezado por delante, que es lo que le da contexto cuando
+llega al asistente sin el resto de la página.
+
+Esto tiene una consecuencia práctica al escribir tus páginas: **una sección que se entiende
+sola funciona mejor**. Un párrafo que da por supuesto lo que dice el anterior se lee bien
+en la página y mal como respuesta de chat.
+
+---
+
+## Si tu sitio publica markdown, mejor
+
+Cuando existe una versión en markdown de la página, Scrivot la prefiere automáticamente.
+Los sitios hechos con Mintlify, Docusaurus y similares publican cada página también en
+`<ruta>.md`, y esa versión no trae menús, botones ni migas de pan.
+
+Importa más de lo que parece: raspar el HTML mete esa decoración en la base de
+conocimiento, y el asistente termina citando el texto de un botón como si fuera
+información.
+
+<Tip>
+  Muchos de esos sitios publican además un **`llms-full.txt`** con la documentación
+  completa en una sola dirección. Cargar `https://tudominio.cl/llms-full.txt` ingiere todo
+  de una vez, en vez de página por página.
+</Tip>
+
+---
+
+## Límites
+
+| | |
+|---|---|
+| Tamaño máximo de la página | 2 MB |
+| Secciones por dirección | 150 |
+| Tiempo máximo de espera | 15 segundos |
+| Formatos | HTML, markdown, texto plano |
+
+Cada sección cuenta contra el límite de contenido de tu plan, igual que una pregunta y
+respuesta.
+
+Si la página supera las 150 secciones, se cargan las primeras y la respuesta trae
+`truncado: true`.
+
+---
+
+## Cuando no funciona
+
+**"No se encontró texto legible en esa página."** Casi siempre es una página que arma su
+contenido con JavaScript en el navegador: Scrivot descarga el HTML tal como llega y ahí no
+hay nada todavía. Prueba con una versión estática, o pega el texto a mano.
+
+**"Esa dirección no es pública."** Solo se admiten direcciones alcanzables desde internet.
+Las direcciones internas, de red local o `localhost` se rechazan a propósito: un asistente
+que pudiera leer la red interna de quien lo hospeda sería un agujero de seguridad, no una
+función.
+
+**"La página respondió 403 / 401."** Requiere sesión. Scrivot entra sin credenciales, como
+cualquier visitante anónimo.

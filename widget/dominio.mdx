@@ -1,66 +1,122 @@
 ---
 title: Dominios autorizados
-description: Controla desde qué sitios puede cargarse el widget
+description: Desde qué sitios puede cargarse tu widget, y cómo verificar que el dominio es tuyo
 ---
 
-## Por qué es necesario autorizar dominios
+## Por qué hay que autorizar dominios
 
-El widget de Scrivot valida el dominio desde donde se hace la solicitud de carga. Esto evita que el script sea usado en sitios no autorizados y protege tu token JWT de ser copiado a otros dominios.
+El script del widget lleva tu token dentro, así que es visible para cualquiera que mire el
+código de tu página. La lista de dominios es lo que impide que ese token sirva en otro
+sitio: Scrivot comprueba desde dónde se está cargando el widget y, si el sitio no está en
+tu lista, responde `403` y el chat no aparece.
 
-Si el widget intenta cargarse desde un dominio **no autorizado**, el backend retorna un `403 Forbidden` y el chat no aparece.
+Sin dominios configurados el widget no se muestra en ninguna parte.
 
 ---
 
-## Cómo agregar un dominio
+## Agregar un dominio
 
-1. Ve a **Workspace → Configuración**
-2. En la sección **Dominios autorizados**, escribe tu dominio
-3. Haz clic en **Guardar**
+Durante la configuración inicial aparece en el paso **Widget web**. Después puedes
+cambiarlo en **Configuración → Widget**.
 
-### Formato del dominio
+Escribe el nombre y elige la extensión de la lista:
 
-Ingresa solo el dominio base, sin protocolo ni rutas:
+<Frame>
+  `miempresa` + `.cl`  →  se guarda como `*.miempresa.cl`
+</Frame>
 
-| ✅ Correcto | ❌ Incorrecto |
+La pantalla te muestra cómo va a quedar guardado antes de que confirmes.
+
+### Los subdominios van incluidos
+
+Cada dominio que agregas cubre **el dominio y todos sus subdominios**. Autorizar
+`miempresa.cl` habilita también:
+
+- `www.miempresa.cl`
+- `app.miempresa.cl`
+- `tienda.miempresa.cl`
+
+<Note>
+  No hace falta agregar `www` ni cada subdominio por separado. Si lo haces, Scrivot los
+  reduce solo: `miempresa.cl;www.miempresa.cl` se guarda como un único `*.miempresa.cl`.
+</Note>
+
+Lo que **no** cubre es otro dominio distinto. `miempresa.cl` no habilita `miempresa.com`:
+ese hay que agregarlo aparte, con el botón **Agregar dominio**.
+
+### Qué puedes escribir
+
+Da igual cómo lo pegues: si copias la dirección completa desde el navegador, Scrivot se
+queda con el dominio.
+
+| Escribes | Se guarda |
 |---|---|
-| `miempresa.cl` | `https://miempresa.cl` |
-| `app.miempresa.cl` | `miempresa.cl/chatbot` |
-| `localhost` | `http://localhost:3000` |
+| `miempresa.cl` | `*.miempresa.cl` |
+| `https://www.miempresa.cl/inicio` | `*.miempresa.cl` |
+| `tienda` + `.com.cl` | `*.tienda.com.cl` |
 
-Para múltiples dominios, sepáralos con punto y coma:
-
-```
-miempresa.cl;staging.miempresa.cl;localhost
-```
+Las extensiones de dos partes (`.com.cl`, `.co.uk`, `.com.ar`) están en la lista. Si la
+tuya no aparece, elige **Otra…** y escríbela.
 
 ---
 
-## Dominios siempre permitidos
+## Verificar que el dominio es tuyo
 
-Los siguientes dominios están autorizados por defecto en todos los workspaces:
+Declarar un dominio no demuestra nada. La verificación sí, y sirve para dos cosas:
+identifica tu dominio como tuyo y evita que otra cuenta pueda reclamarlo.
 
-- `scrivot.cl`
-- `localhost` (para desarrollo local)
-- `scrivot-front-staging.up.railway.app`
+Hay dos formas, y **la primera no requiere que hagas nada**.
+
+<Steps>
+  <Step title="Instalando el widget">
+    En cuanto el widget cargue por primera vez desde tu sitio, el dominio queda verificado
+    solo. Es la forma natural: para poner el script en tu sitio hace falta acceso a él, y
+    eso ya es la prueba.
+  </Step>
+  <Step title="Con un registro DNS">
+    Útil si quieres verificar **antes** de instalar, o si otra cuenta reclamó tu dominio.
+    En **Configuración → Widget** abre *Verificar con un registro DNS* y agrega el TXT que
+    te muestra:
+
+    | Campo | Valor |
+    |---|---|
+    | Tipo | `TXT` |
+    | Nombre | `_scrivot` |
+    | Valor | `scrivot-verify=...` (el que aparece en pantalla) |
+
+    Luego pulsa **Verificar ahora**. La propagación del DNS puede tardar unos minutos: si
+    no lo encuentra a la primera, espera un poco y reintenta.
+  </Step>
+</Steps>
+
+### Qué pasa si otra cuenta ya tiene tu dominio
+
+Depende de si lo verificó:
+
+- **Sin verificar** — no bloquea. Alguien que solo escribió tu dominio en un formulario no
+  ha demostrado nada, y no puede impedirte usarlo.
+- **Verificado** — sí bloquea, y verás un aviso al guardar. Si el dominio es tuyo,
+  [escríbenos](mailto:contacto@scrivot.cl) y lo revisamos.
 
 ---
 
-## Subdominios
+## Desarrollo local
 
-Cada subdominio debe autorizarse por separado. `miempresa.cl` **no** cubre `app.miempresa.cl` automáticamente.
-
-<Warning>
-  No uses `*` como comodín — no está soportado. Agrega cada dominio/subdominio explícitamente.
-</Warning>
+`localhost` está permitido siempre, sin necesidad de agregarlo, para que puedas probar el
+widget antes de publicarlo.
 
 ---
 
-## Entornos de desarrollo y producción
+## El chat no aparece en mi sitio
 
-Es normal tener múltiples dominios para distintos entornos:
+Casi siempre es el dominio. Comprueba en orden:
 
-```
-miempresa.cl;staging.miempresa.cl;localhost
-```
+1. **¿Está en la lista?** Abre **Configuración → Widget** y revisa que aparezca.
+2. **¿Es el mismo dominio?** El que ves en la barra del navegador tiene que caer dentro de
+   alguno de los autorizados. Cuidado con dominios parecidos: `miempresa.cl` y
+   `miempresa.com` son distintos.
+3. **¿Está el script?** Tiene que estar dentro del `<head>`. Ver
+   [Instalación del widget](/widget/instalacion).
 
-Esto permite probar el widget en local (`localhost`) y en staging sin afectar producción.
+Si el dominio no está autorizado, la petición responde `403` y lo verás en la consola del
+navegador.
