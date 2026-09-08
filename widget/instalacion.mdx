@@ -31,17 +31,17 @@ El snippet tiene este formato:
 
 <Tabs>
   <Tab title="HTML puro">
-    Pega el script antes del cierre de `</body>`:
+    Pega el script dentro del `<head>`:
 
     ```html
-    <body>
-      <!-- Tu contenido aquí -->
+    <head>
+      <!-- Resto de tu head -->
 
       <script
         src="https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN"
         async
       ></script>
-    </body>
+    </head>
     ```
   </Tab>
 
@@ -54,13 +54,13 @@ El snippet tiene este formato:
     export default function RootLayout({ children }: { children: React.ReactNode }) {
       return (
         <html lang="es">
-          <body>
-            {children}
+          <head>
             <Script
               src="https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN"
-              strategy="lazyOnload"
+              strategy="afterInteractive"
             />
-          </body>
+          </head>
+          <body>{children}</body>
         </html>
       )
     }
@@ -87,8 +87,8 @@ El snippet tiene este formato:
         const script = document.createElement('script')
         script.src = 'https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN'
         script.async = true
-        document.body.appendChild(script)
-        return () => document.body.removeChild(script)
+        document.head.appendChild(script)
+        return () => document.head.removeChild(script)
       }, [])
       return null
     }
@@ -96,18 +96,19 @@ El snippet tiene este formato:
   </Tab>
 
   <Tab title="WordPress">
-    Ve a **Apariencia → Editor de temas → footer.php** y pega el script antes de `</body>`:
+    Ve a **Apariencia → Editor de temas → header.php** y pega el script dentro del `<head>`:
 
     ```php
     <script
       src="https://widget.scrivot.cl/widget.js?jwt=TU_WIDGET_TOKEN"
       async
     ></script>
-    <?php wp_footer(); ?>
-    </body>
+    <?php wp_head(); ?>
+    </head>
     ```
 
-    También puedes usar el plugin **Insert Headers and Footers** para evitar editar el tema directamente.
+    Más simple y sin tocar el tema: el plugin **Insert Headers and Footers**, pegándolo en
+    la sección de *header* (no en la de footer).
   </Tab>
 
   <Tab title="Webflow">
