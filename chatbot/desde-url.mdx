@@ -60,6 +60,15 @@ número `reemplazados` de la respuesta.
 
 Cuando cambies la página, vuelve a cargarla y listo.
 
+### Revisa lo que quedó cargado
+
+El número de fragmentos no dice si el contenido es el correcto. Después de cargar, abre la
+colección y lee un par: sobre todo si acabas de corregir algo, comprueba que lo cargado
+dice la versión nueva.
+
+Una página que devuelve contenido viejo o incompleto se carga igual de bien que una
+correcta, y el asistente no tiene forma de saber la diferencia.
+
 ---
 
 ## Cómo se parte el contenido
@@ -86,11 +95,26 @@ Importa más de lo que parece: raspar el HTML mete esa decoración en la base de
 conocimiento, y el asistente termina citando el texto de un botón como si fuera
 información.
 
-<Tip>
-  Muchos de esos sitios publican además un **`llms-full.txt`** con la documentación
-  completa en una sola dirección. Cargar `https://tudominio.cl/llms-full.txt` ingiere todo
-  de una vez, en vez de página por página.
-</Tip>
+### Cuidado con `llms-full.txt`
+
+Muchos de esos sitios publican además un **`llms-full.txt`** con la documentación completa
+en una sola dirección. Es tentador: una carga y listo.
+
+<Warning>
+  **Ese archivo suele ir por detrás del sitio.** Se genera aparte y puede tardar en
+  reflejar lo que acabas de publicar.
+
+  Nos pasó cargando esta misma documentación: el `llms-full.txt` no incluía páginas
+  publicadas horas antes, y de una página que sí traía servía **la versión anterior a la
+  corrección**. Las direcciones individuales `.md` ya estaban al día. Es decir, el
+  asistente habría aprendido justo lo que acabábamos de arreglar.
+</Warning>
+
+Sirve para una primera carga masiva, cuando lo que buscas es tener algo cargado rápido.
+Para mantener el asistente al día, **carga página por página**: es la única forma de saber
+que lo que aprende es lo que dice tu sitio hoy.
+
+Y si lo usas, comprueba después que el contenido cargado incluye lo último que escribiste.
 
 ---
 
