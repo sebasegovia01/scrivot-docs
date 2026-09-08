@@ -52,19 +52,21 @@ Copia ese snippet — el JWT es único para tu chatbot y espacio de trabajo.
 
 ## Paso 5 — Agrega el script a tu sitio
 
-Pega el snippet **antes del cierre de `</body>`** en tu HTML:
+Pega el snippet **dentro del `<head>`** de tu HTML:
 
 ```html
 <!DOCTYPE html>
 <html>
-  <head>...</head>
-  <body>
-    <!-- Tu contenido -->
+  <head>
+    <!-- Resto de tu head -->
 
     <script
       src="https://widget.scrivot.cl/widget.js?jwt=TU_TOKEN_DE_WIDGET"
       async
     ></script>
+  </head>
+  <body>
+    <!-- Tu contenido -->
   </body>
 </html>
 ```
@@ -77,13 +79,13 @@ import Script from 'next/script'
 export default function Layout({ children }) {
   return (
     <html>
-      <body>
-        {children}
+      <head>
         <Script
           src="https://widget.scrivot.cl/widget.js?jwt=TU_TOKEN_DE_WIDGET"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
-      </body>
+      </head>
+      <body>{children}</body>
     </html>
   )
 }
